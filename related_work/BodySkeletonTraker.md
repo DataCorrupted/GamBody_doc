@@ -1,6 +1,7 @@
 # BodySkeletonTracker
-# link
+# link and what's common
 https://github.com/derzu/BodySkeletonTracker
+Although they use DRGB camera, they say it works normal webcam if the background is smooth. But is can't detect feets and knees.
 # Description
 Human body skeleton detection and tracking from video camera in real time. It was developed for an Orbbec Astra camera DRGB (Depth-RGB), uses the OpenNI2 driver, it should also works with Asus Xtion and Prime Sense. It works with normal webcam, in the case of background is smooth.
 
