@@ -29,21 +29,21 @@
 
 
 \lstdefinestyle{mystyle}{
-  backgroundcolor=\color{backcolour},   
+  backgroundcolor=\color{backcolour},
   commentstyle=\color{codegreen},
   keywordstyle=\color{magenta},
   numberstyle=\tiny\color{codegray},
   stringstyle=\color{codepurple},
   basicstyle=\footnotesize,
-  breakatwhitespace=false,         
-  breaklines=true,                 
-  captionpos=b,                    
-  keepspaces=true,                 
-  numbers=left,                    
-  numbersep=5pt,                  
-  showspaces=false,                
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
   showstringspaces=false,
-  showtabs=false,                  
+  showtabs=false,
   tabsize=2
 }
 \lstset{style=mystyle}
@@ -69,7 +69,7 @@
 
 \begin{abstract}
 	In this report we will mark some achievements we have accomplished, and further purpose some problems(along with solutions, maybe) we need to solve in order to reach our goal.
-%	In this milestone report we are going to propose the problems we want to solve aiming at our goal of implementing the visual game Gambody. 
+%	In this milestone report we are going to propose the problems we want to solve aiming at our goal of implementing the visual game Gambody.
 	We will specify our technical approach too.
 %	We will specify the technical approach we are using at present and what we have achieved so far. The remaining milestones including the dates and sub-goals will be given furthermore.
 \end{abstract}
@@ -122,25 +122,25 @@
 		\caption{Upper Left: original photo. Upper Right: Background. Lower Left: the image after subtraction. Lower Right: The body region after we force a threshold. It's clear that only forcing a threshold doesn't work well since shadows, noise will also be counted as part of human body.}
 	\end{figure}
 	\par
-		Due to the noise caused by camera shaking, we use a Gaussian blur and set a threshold to filter out noise. 
+		Due to the noise caused by camera shaking, we use a Gaussian blur and set a threshold to filter out noise.
 		The first version is implemented on the gray value. In other words, the RGB image is first converted to a gray image, doing subtraction, then applying the threshold to get the body.
-		Now we are using a threshold of 0.14(gray scale from 0 to 1). 
+		Now we are using a threshold of 0.14(gray scale from 0 to 1).
 		Pixels whose gray value are above 0.14 are considered to be part of human body.
 	\par
-		However, that method brings a problem. Suppose the background is purely green, while the body is purely red. 
-		In gray images, they are the same. 
-		Thus in the latter version, instead of using the gray image, the body is obtained by comparing RGB raw image. 
-		If any of the 3 channel changes a lot, we rule it as part of human body. 
+		However, that method brings a problem. Suppose the background is purely green, while the body is purely red.
+		In gray images, they are the same.
+		Thus in the latter version, instead of using the gray image, the body is obtained by comparing RGB raw image.
+		If any of the 3 channel changes a lot, we rule it as part of human body.
 		In the future we will use HSV color space which is more robust to the shadows.
 	\par
 		After that, there are still some problems, we get some blobs that are not part of the body, and we might lose some part of the body. So we tried to set the largest (and maybe with the second largest) connected binary image to be the crop body.
 	\subsection{Generate Masks and Evaluate Results}
-		Now that we have get the cropped body from previous part, we can generate masks from it. 
+		Now that we have get the cropped body from previous part, we can generate masks from it.
 		To reduce the workload of evaluate, we use bonding box to cut the raw image and get a small image which will contain only the body part.
 		After that, we set different levels for players so the masks should have their own label of difficult levels.
 	\par
-		For evaluation part we get two images, one is the players' body and another one is the mask. 
-		We normalize the two image so it have robustness for different height and size, then we calculate the correlation of the two pictures and get the biggest correlation value. 
+		For evaluation part we get two images, one is the players' body and another one is the mask.
+		We normalize the two image so it have robustness for different height and size, then we calculate the correlation of the two pictures and get the biggest correlation value.
 		If the value is bigger than the threshold, then players will pass this level.
 		Currently, the threshold is set to 0.95.
 	\subsection{Real-time indicator}
@@ -154,24 +154,24 @@
 			\centering
 			\includegraphics[width=\linewidth]{./Pic/Level}
 			\caption{One image in the camera stream. The user knows the result(red means fail, which is the case here) and goal at the same time.}
-		\end{figure}	
+		\end{figure}
 \section{Remaining Problems}
 	\subsection{Body Pose Recognition}
-		In our first version of Gambody, we use only binary images to determine whether the player passed or not. 
-		A smart player might use the advantage of normalization part and get a pass without a correct pose. 
+		In our first version of Gambody, we use only binary images to determine whether the player passed or not.
+		A smart player might use the advantage of normalization part and get a pass without a correct pose.
 		Considering this hack, we need body pose recognition from a monocular RGB web-cam.
 	\subsection{Background Movement and Multi People}
-		We assume background will not move in the first version of our game but reality suggests the otherwise, and maybe there are more than one players. 
+		We assume background will not move in the first version of our game but reality suggests the otherwise, and maybe there are more than one players.
 		All these will make our assumption fail and so do our code. So we need to deal with multi people and background moving environment.\par
 	\subsection{Work To Do}
-		To deal with real-time multi-person 2D pose recognition, there are some related works. 
-		In our references, there are some methods using CNNs and it is open source. 
+		To deal with real-time multi-person 2D pose recognition, there are some related works.
+		In our references, there are some methods using CNNs and it is open source.
 		So we decide to use the open source library and rewrite our code by cpp to speed up.\par
-		Also to make our work real-time on the household play stations, we can't use pose recognition all the time. So we will estimate the final image and recognize the pose and skeleton to get scores for player.
+		Also to make our work real-time on the household play stations, we can't use pose recognition all the time. So we will estimate the final image and recognize the pose and skeleton to get scores for player.\cite{cao2017realtime}\cite{wei2016cpm}
 
 
-% \bibliographystyle{IEEEtran}
+\bibliographystyle{IEEEtran}
 % %% De-comment this line if you have any reference.
 % %% And don't forget to change .bib file.
-% \bibliography{milestone}
+\bibliography{milestone}
 \end{document}
