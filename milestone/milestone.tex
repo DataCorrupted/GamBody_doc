@@ -68,7 +68,7 @@
 \maketitle
 
 \begin{abstract}
-	In this report we will mark some achievements we have accomplished, and further purpose some problems(along with solutions, maybe) we need to solve in order to reach our goal.
+	In this report we will mark some achievements we have accomplished, and further propose some problems(along with solutions, maybe) we need to solve in order to reach our goal.
 %	In this milestone report we are going to propose the problems we want to solve aiming at our goal of implementing the visual game Gambody.
 	We will specify our technical approach too.
 %	We will specify the technical approach we are using at present and what we have achieved so far. The remaining milestones including the dates and sub-goals will be given furthermore.
@@ -98,7 +98,7 @@
 % It seems that this part is not required in the milestone report.
 % IF have, please fill in
 \section{Technical Approach}
-	\subsection{Getting camera stream}
+	\subsection{Getting Camera Stream}
 	\par
 	We make use of the Image Acquisition Toolbox to connect camera device to MATLAB and achieve real-time image processing and displaying. In general, we keep capturing an image from the camera stream, modify the image we received and show on the screen as long as the camera is working.
 	\par
@@ -111,7 +111,7 @@
 	\begin{lstlisting}[language = MATLAB]
 		img = flip(img, 2)\end{lstlisting}
 	this function will flip matrix $img$ along the 2nd dimension(row, with column being 1st dimention)
-	\subsection{Crop out body}
+	\subsection{Crop Out Body}
 	\par
 	A simple but useful method has been implemented to detect the body. The principle is that given the camera is fixed, the only area has color changing on the image is the body part.
 	\par
