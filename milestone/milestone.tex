@@ -21,7 +21,32 @@
 \usepackage{ulem}
 \usepackage{float}
 \usepackage{indentfirst}
-\newcommand{\subparagraph}{}
+\usepackage{color}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstset{style=mystyle}
 \begin{document}
 \title{
 	Computer Vision Course Project Milestone Report\\
@@ -80,6 +105,12 @@
 	To be more specific, we first let MATLAB automatically set camera parameters and invoke the camera since the parameters are device dependent. Then a while loop is maintained to implement the primary procedure during the logging time of the camera.
 	\par
 	One of the obstacle we are facing now is that we can't add some pause time before the result is showed to the player. But it would be best if we give player some time to wait.
+	\par
+	Also, we need to mirror the image we received, or left and right will be shifted and the user will have a hard time to adapt to it.
+	In the first trial we neglected this effect and the game was almost impossible. Now we use a function provided in the MATLAB:
+	\begin{lstlisting}[language = MATLAB]
+		img = flip(img, 2)\end{lstlisting}
+	this function will flip matrix $img$ along the 2nd dimension(row, with column being 1st dimention)
 	\subsection{Crop out body}
 	\par
 	A simple but useful method has been implemented to detect the body. The principle is that given the camera is fixed, the only area has color changing on the image is the body part.
@@ -112,7 +143,18 @@
 		We normalize the two image so it have robustness for different height and size, then we calculate the correlation of the two pictures and get the biggest correlation value. 
 		If the value is bigger than the threshold, then players will pass this level.
 		Currently, the threshold is set to 0.95.
-\section{Milestones Achieved So Far}
+	\subsection{Real-time indicator}
+	\par
+		We need to show the user how he is doing from the image. We considered using words but we determined that it's best to directly show it on the camera feedback.
+	\par
+		To simultaneously show the mask and the correctness, we decided to change certain channel's value.
+		If the player passed, the green channel will be changed, or red channel will. The image will thus be greenish or reddish respectively.
+		We will only change pixels in the mask, so the user know what the mask is.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=\linewidth]{./Pic/Level}
+			\caption{The user knows the result(red means fail, which is the case here) and goal at the same time.}
+		\end{figure}	
 \section{Remaining Problems}
 	\subsection{Body Pose Recognition}
 		In our first version of Gambody, we use only binary images to determine whether the player passed or not. 
