@@ -66,7 +66,21 @@
 		To fix this, we are going to implement a system based on camera so that every one can play this game.
 		In our work, we will be using camera to track real person, it will also give player a bounding box (moving wall).
 		The box and player's outfit is compared by our system, the return should be a pass (True) or no pass (False).
+\section{Related Work}
+% IF have, please fill in
 \section{Technical Approach}
+\subsection{Getting camera stream}
+% please fill in
+\subsection{Crop out body}
+\par
+A simple but useful method has been implemented to detect the body. The principle is that given the camera is fixed, the only area has color changing on the image is the body part.
+\par
+In detail, we take a photo of the backgroud first, then we subtract it by the images containing body. As the result, we would get a image with only the body part.
+% TODO, add some image here of raw body here.
+\par
+Due to the noise caused by camera shaking, we use a threshold to filter out noise. The first version is implmented on the gray value. In other words, the RGB image is first converted to a gray image, then applying the threshold to get the body.
+\par
+However, that method brings a problem. If the background is purely green, and the body is purely red. In gray images, they are the same. So in version 2, instead of using the gray image, the body is obtained by comparing RGB raw image. If any of the 3 channel changes a lot, it could be part of the body.
 
 \section{Milestones Achieved So Far}
 
