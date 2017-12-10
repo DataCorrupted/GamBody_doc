@@ -85,21 +85,43 @@ One of the obstacle we are facing now is that we can't add some pause time befor
 A simple but useful method has been implemented to detect the body. The principle is that given the camera is fixed, the only area has color changing on the image is the body part.
 \par
 In detail, we take a photo of the background first, then we subtract it by the images containing body. As the result, we would get a image with only the body part.
-% TODO, add some image here of raw body here.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{./Pic/CropBody.png}
-	\caption{Upper Left: original photo. Upper Right: Background. Lower Left: the image after subtraction. Lower Right: The body region after we force a threshold.}
+	\caption{Upper Left: original photo. Upper Right: Background. Lower Left: the image after subtraction. Lower Right: The body region after we force a threshold. It's clear that only forcing a threshold doesn't work well since shadows, noise will also be counted as part of human body.}
 \end{figure}
 \par
-Due to the noise caused by camera shaking, we use a threshold to filter out noise. The first version is implemented on the gray value. In other words, the RGB image is first converted to a gray image, doing subtraction, then applying the threshold to get the body.
+	Due to the noise caused by camera shaking, we use a Gaussian blur and set a threshold to filter out noise. 
+	The first version is implemented on the gray value. In other words, the RGB image is first converted to a gray image, doing subtraction, then applying the threshold to get the body.
+	Now we are using a threshold of 0.14(gray scale from 0 to 1). 
+	Pixels whose gray value are above 0.14 are considered to be part of human body.
 \par
-However, that method brings a problem. Suppose the background is purely green, while the body is purely red. 
-In gray images, they are the same. Thus in the latter version, instead of using the gray image, the body is obtained by comparing RGB raw image. If any of the 3 channel changes a lot, we rule it as part of human body.
-
+	However, that method brings a problem. Suppose the background is purely green, while the body is purely red. 
+	In gray images, they are the same. 
+	Thus in the latter version, instead of using the gray image, the body is obtained by comparing RGB raw image. 
+	If any of the 3 channel changes a lot, we rule it as part of human body. 
+	In the future we will use HSV color space which is more robust to the shadows.
+\par
+	After that, there are still some problems, we get some blobs that are not part of the body, and we might lose some part of the body. So we tried to set the largest (and maybe with the second largest) connected binary image to be the crop body.
+\subsection{Generate Masks and Evaluate Results}
+	Now that we have get the cropped body from previous part, we can generate masks from it. 
+	To reduce the workload of evaluate, we use bonding box to cut the raw image and get a small image which will contain only the body part.
+	After that, we set different levels for players so the masks should have their own label of difficult levels.
+\par
+	For evaluation part we get two images, one is the players' body and another one is the mask. 
+	We normalize the two image so it have robustness for different height and size, then we calculate the correlation of the two pictures and get the biggest correlation value. 
+	If the value is bigger than the threshold, then players will pass this level.
+	Currently, the threshold is set to 0.95.
+\par
 \section{Milestones Achieved So Far}
-
 \section{Remaining Milestones}
+\subsection{Body Pose Recognition}
+In our first version of Gambody, we use only binary images to determine whether the player pass or not. So a smart player might use the advantage of normalization part and get a pass without a correct pose. Which means, we need body pose recognition from a monocular RGB web-cam.\par
+\subsection{Background Movement and Multi People}
+We assume background will not move in the first version of our game but there might be, and maybe there  are more than one players. All these will make our assumption fail and so do our code. So we need to deal with multi people and background moving environment.\par
+\subsection{Work To Do}
+To deal with real-time multi-person 2D pose recognition, there are some related works. In our references, there are some methods using CNNs and it is open source. So we decide to use the open source library and rewrite our code by cpp to speed up.\par
+Also to make our work real-time on the household play stations, we can't use pose recognition all the time. So we will estimate the final image and recognize the pose and skeleton to get scores for player.
 
 
 % \bibliographystyle{IEEEtran}
