@@ -43,11 +43,14 @@
 \maketitle
 
 \begin{abstract}
-	In this milestone report we are going to propose the problems we want to solve aiming at our goal of implementing the visual game Gambody. We will clarify the technical approach we are using at present and what we have achieved so far. The remaining milestones including the dates and sub-goals will be given furthermore.
+	In this report we will mark some achievements we have accomplished, and further purpose some problems(along with solutions, maybe) we need to solve in order to reach our goal.
+%	In this milestone report we are going to propose the problems we want to solve aiming at our goal of implementing the visual game Gambody. 
+	We will specify our technical approach too.
+%	We will specify the technical approach we are using at present and what we have achieved so far. The remaining milestones including the dates and sub-goals will be given furthermore.
 \end{abstract}
 \section{Introduction}
 	\par
-		We found a popular game called \textit{Hole in the Wall}. In this game one (or two) player(s) are facing a moving wall with a certain shape of hole, the player have to make certain pose to pass the moving wall or he will be pushed into the water.
+		We found a popular game called \textit{Hole in the Wall}. In this game one (or two) player(s) are facing a moving wall with a certain shape of hole, the player have to make a specific pose to pass the moving wall or he will be pushed into a water pool behind him.
 		Such game is interesting but householders can never have the privilege to play in family gatherings or parties since one can hardly find a moving wall nor adequate safety measurements.
 		\begin{figure}[h]
 			\centering
@@ -64,7 +67,7 @@
 
 	\par
 		To fix this, we are going to implement a system based on camera so that every one can play this game.
-		In our work, we will be using camera to track real person, it will also give player a bounding box (moving wall).
+		In our work, we will be using one single camera to track person, it will also give player a bounding box (moving wall).
 		The box and player's outfit is compared by our system, the return should be a pass (True) or no pass (False).
 %\section{Related Work}
 % It seems that this part is not required in the milestone report.
@@ -72,26 +75,27 @@
 \section{Technical Approach}
 \subsection{Getting camera stream}
 \par
-We make use of the Image Acquisition Toolbox to connect camera device to MATLAB and achieve real-time image processing and displaying. In general, we keep capturing an image from the camera stream, doing image processing and displaying the result on the screen as long as the camera is working.
+We make use of the Image Acquisition Toolbox to connect camera device to MATLAB and achieve real-time image processing and displaying. In general, we keep capturing an image from the camera stream, modify the image we received and show on the screen as long as the camera is working.
 \par
-In detail, we first let MATLAB automatically set camera parameters and invoke the camera since the parameters are device dependent. Then a while loop is maintained to implement the primary procedure during the logging time of the camera.
+To be more specific, we first let MATLAB automatically set camera parameters and invoke the camera since the parameters are device dependent. Then a while loop is maintained to implement the primary procedure during the logging time of the camera.
 \par
 One of the obstacle we are facing now is that we can't add some pause time before the result is showed to the player. But it would be best if we give player some time to wait.
 \subsection{Crop out body}
 \par
 A simple but useful method has been implemented to detect the body. The principle is that given the camera is fixed, the only area has color changing on the image is the body part.
 \par
-In detail, we take a photo of the backgroud first, then we subtract it by the images containing body. As the result, we would get a image with only the body part.
+In detail, we take a photo of the background first, then we subtract it by the images containing body. As the result, we would get a image with only the body part.
 % TODO, add some image here of raw body here.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{./Pic/CropBody.png}
-	\caption{Crop Body}
+	\caption{Upper Left: original photo. Upper Right: Background. Lower Left: the image after subtraction. Lower Right: The body region after we force a threshold.}
 \end{figure}
 \par
-Due to the noise caused by camera shaking, we use a threshold to filter out noise. The first version is implmented on the gray value. In other words, the RGB image is first converted to a gray image, then applying the threshold to get the body.
+Due to the noise caused by camera shaking, we use a threshold to filter out noise. The first version is implemented on the gray value. In other words, the RGB image is first converted to a gray image, doing subtraction, then applying the threshold to get the body.
 \par
-However, that method brings a problem. If the background is purely green, and the body is purely red. In gray images, they are the same. So in version 2, instead of using the gray image, the body is obtained by comparing RGB raw image. If any of the 3 channel changes a lot, it could be part of the body.
+However, that method brings a problem. Suppose the background is purely green, while the body is purely red. 
+In gray images, they are the same. Thus in the latter version, instead of using the gray image, the body is obtained by comparing RGB raw image. If any of the 3 channel changes a lot, we rule it as part of human body.
 
 \section{Milestones Achieved So Far}
 
