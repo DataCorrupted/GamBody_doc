@@ -152,7 +152,7 @@
 		We will only change pixels in the mask, so the user know what the mask is.
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=\linewidth]{./Pic/Level}
+			\includegraphics[width=\linewidth]{./Pic/level.png}
 			\caption{One image in the camera stream. The user knows the result(red means fail, which is the case here) and goal at the same time.}
 		\end{figure}
 \section{Remaining Problems}
@@ -168,6 +168,7 @@
 		In our references, there are some methods using CNNs and it is open source.
 		So we decide to use the open source library and rewrite our code by cpp to speed up.\par
 		Also to make our work real-time on the household play stations, we can't use pose recognition all the time. So we will estimate the final image and recognize the pose and skeleton to get scores for player.\cite{cao2017realtime}\cite{wei2016cpm}
+		An alternative way could be body tracking. If moving body can be tracked properly, we might solve the noise and multi-person problem. There is a method using mean shift for tracking. \cite{Comaniciu2000}
 
 
 \bibliographystyle{IEEEtran}
