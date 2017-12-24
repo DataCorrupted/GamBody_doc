@@ -1,0 +1,32 @@
+PPT Pipeline:
+
+General idea
+
+Crop
+	Minus - pic without filter
+	Gaussian
+	Connectivity
+Noise
+	Object Free
+
+Skeleton
+	Openpose
+	Compare
+		Direct cmp; Weighted cmp.
+		Pose pics * 2
+
+	Human Problem:
+		Solution 1:
+			Higher wins
+		Solution 2:
+			Trajectory Prediction
+
+Implementation
+	Infinite Loop:
+	Compare:
+		weight ratio
+		skeleton loss
+	Mask generation
+	Video
+
+
