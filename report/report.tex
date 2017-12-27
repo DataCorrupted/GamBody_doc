@@ -65,8 +65,25 @@ ShanghaiTech University\\
 \section{Introduction}
 \section{Related Work}
 \section{Our Approach}
+	\subsection{Mask Generation}
+		\par We generate mask by taking a photo of a pose and the background first. 
+		Then we substract the image to get the binary mask of the pose. 
+		We also use Openpose to generate a skeleton data and image.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.45\linewidth]{./Pic/Approach_Mask_back}
+			\includegraphics[width=0.45\linewidth]{./Pic/Approach_Mask_pose}
+			\caption{Initial images given}
+		\end{figure}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.9\linewidth]{./Pic/Approach_Mask_binary_mask}
+			\includegraphics[width=0.9\linewidth]{./Pic/Approach_Mask_skeleton}
+			\caption{Mask generated}
+		\end{figure}
 	\subsection{Version One}
 	\subsection{Openpose\cite{cao2017realtime}}
+
 		\subsubsection{Json}
 	\subsection{Noise}
 \section{Experiment}
