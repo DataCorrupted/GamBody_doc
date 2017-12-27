@@ -83,8 +83,14 @@ ShanghaiTech University\\
 		\end{figure}
 	\subsection{Version One}
 	\subsection{Openpose\cite{cao2017realtime}}
-
+		\par To generate a skeleton we have to generate confidence map using which we can determine where the joint is. 
+		Each joint is self-defined, so joint here can be eyes and ears. 
+		18 joints is defined, which is eyes(2), ears(2), nose(1), chest(1), shoulders(2), elbows(2), wrists(2), waists(2), knees(2) and ankles(2).
+		We also have to predict Part Affine Fields, which can be used to generate a cost for each connection.
+		\par With joints and connection cost, how to connect joints become a bipartite graph maximum matching problem.
+		\par We used the binary executable\cite{cao2017realtime} when testing. We will take the last image and give it to the executable. The executable will generate a json file describing each detected joint for each person. 
 		\subsubsection{Json}
+			
 	\subsection{Noise}
 \section{Experiment}
 	\subsection{Weight on Skeleton}

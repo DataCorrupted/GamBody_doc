@@ -5,3 +5,5 @@
 *.pdf
 *.dvi
 presentation/*
+*.bbl
+*.blg
