@@ -1,18 +1,15 @@
-\documentclass[conference,compsoc]{IEEEtran}
-\usepackage{cite}
-\usepackage{listings}
-\usepackage{blindtext}
-\usepackage{enumitem}
-% for coding highlight
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
 \usepackage{graphicx}
-\usepackage{subfigure}
-\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{subfloat}
-\usepackage{ulem}
-\usepackage{float}
-\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[breaklinks=true,bookmarks=false]{hyperref}
 \usepackage{color}
+\usepackage{indentfirst}
+\usepackage{listings}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -38,27 +35,39 @@
   tabsize=2
 }
 \lstset{style=mystyle}
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+\setcounter{page}{4321}
 \begin{document}
-\title{
-	Computer Vision Course Project Milestone Report\\
-	Gambody \\
-}
 
+%%%%%%%%% TITLE
+\title{Computer Vision Course Project Report\\ Gambody}
 
-% author names and affiliations
-% use a multiple column layout for up to three different
-% affiliations
-\author{
-	\IEEEauthorblockN{Yuyang Rong, Jingyi Huang, Anqi Pang, Jianxiong Cai, Ziyue Li}
-	\IEEEauthorblockA{
-		School of Information Science and Technology \\
-		ShanghaiTech University \\
-	}
+\author{First Author\\
+Institution1\\
+Institution1 address\\
+{\tt\small firstauthor@i1.org}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Second Author\\
+Institution2\\
+First line of institution2 address\\
+{\tt\small secondauthor@i2.org}
 }
 
 \maketitle
 
 \begin{abstract}
+
 \end{abstract}
 \section{Introduction}
 \section{Related Work}
@@ -73,8 +82,9 @@
 	\subsection{Noise Cancellation Parameter}
 \section{Conclusion}
 
-\bibliographystyle{IEEEtran}
-% %% De-comment this line if you have any reference.
-% %% And don't forget to change .bib file.
+
+{\small
+\bibliographystyle{ieee}
 \bibliography{report}
+}
 \end{document}
