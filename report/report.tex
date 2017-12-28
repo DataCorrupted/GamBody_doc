@@ -47,7 +47,7 @@
 
 %%%%%%%%% TITLE
 \title{
-Computer Vision Course Project Report\\ 
+Computer Vision Course Project Report\\
 Gambody
 }
 
@@ -63,11 +63,35 @@ ShanghaiTech University\\
 
 \end{abstract}
 \section{Introduction}
+    \par
+        We found a popular game called \textit{Hole in the Wall}. In this game one (or two) player(s) are facing a moving wall with a certain shape of hole, the player have to make a specific pose to pass the moving wall or he will be pushed into a water pool behind him.
+        Such game is interesting but householders can never have the privilege to play in family gatherings or parties since one can hardly find a moving wall nor adequate safety measurements.
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.8\linewidth]{./Pic/HIW_Logo}
+            \caption{Game Logo}
+        \end{figure}
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.45\linewidth]{./Pic/HIW_RedTeam}
+            \includegraphics[width=0.45\linewidth]{./Pic/HIW_BlueTeam}
+            \caption{Two players in the game posing to pass the wall.}
+        \end{figure}
+    \par
+        To fix this, we are going to implement a system based on camera so that every one can play this game.
+        In our work, we will be using one single camera to track person. It will also give player a bounding box (moving wall), which is remarked as a mask in the system.
+        The mask and player's body part is compared by our system, the return should be a pass (True) or no pass (False). More details about our technical approaches are in Section 3. And the subsection Mask Generation introduces how to generate masks.
+    \par
+        In Section 3, we will propose two versions of implementations. In the first version, we apply direct subtraction to get the body part of the player and return a pass if the overlap of body and mask is greater than a threshold. More details are included in the subsection Version One. Since this naive version is parameter-dependent and has low robustness, we implement a more advanced version based on a previous work \textit{Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields}\cite{cao2017realtime}. Specifically, we compare the skeletons of the mask and the player and define a loss function computing the euclidean distance. Likewise, the system returns a pass if the loss is smaller than a threshold. More details about this version are included in the subsection Openpose.
+    \par
+        In both versions, we have no need to care about object noise. But there may be circumstances that some passers-by appear resulting in the ambiguity on deciding which is the player. To deal with this kind of noise, we have tried out two solutions. One is called \emph{highest wins} strategy, and the other bases on \emph{trajectory predition}. The efforts on noise cancellation are presented in the subsection Noise.
+    \par
+        We also did some experiments to improve the system further. In Section 4, the trials about \emph{weights on skeleton} and \emph{noise cancellation parameters} are introduced in detail respectively.
 \section{Related Work}
 \section{Our Approach}
 	\subsection{Mask Generation}
-		\par We generate mask by taking a photo of a pose and the background first. 
-		Then we substract the image to get the binary mask of the pose. 
+		\par We generate mask by taking a photo of a pose and the background first.
+		Then we substract the image to get the binary mask of the pose.
 		We also use Openpose to generate a skeleton data and image.
 		\begin{figure}[h]
 			\centering
@@ -83,14 +107,14 @@ ShanghaiTech University\\
 		\end{figure}
 	\subsection{Version One}
 	\subsection{Openpose\cite{cao2017realtime}}
-		\par To generate a skeleton we have to generate confidence map using which we can determine where the joint is. 
-		Each joint is self-defined, so joint here can be eyes and ears. 
+	    \par To generate a skeleton we have to generate confidence map using which we can determine where the joint is.
+		Each joint is self-defined, so joint here can be eyes and ears.
 		18 joints is defined, which is eyes(2), ears(2), nose(1), chest(1), shoulders(2), elbows(2), wrists(2), waists(2), knees(2) and ankles(2).
 		We also have to predict Part Affine Fields, which can be used to generate a cost for each connection.
 		\par With joints and connection cost, how to connect joints become a bipartite graph maximum matching problem.
-		\par We used the binary executable\cite{cao2017realtime} when testing. We will take the last image and give it to the executable. The executable will generate a json file describing each detected joint for each person. 
-		\subsubsection{Json}
-			
+		\par We used the binary executable\cite{cao2017realtime} when testing. We will take the last image and give it to the executable. The executable will generate a json file describing each detected joint for each person.
+	    \subsubsection{Json}
+
 	\subsection{Noise}
 \section{Experiment}
 	\subsection{Weight on Skeleton}
