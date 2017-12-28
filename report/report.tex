@@ -88,6 +88,15 @@ ShanghaiTech University\\
     \par
         We also did some experiments to improve the system further. In Section 4, the trials about \emph{weights on skeleton} and \emph{noise cancellation parameters} are introduced in detail respectively.
 \section{Related Work}
+Our goal is to get 2D or 3D stable skeleton from sigle webcam with out depth channal(using only RGB) in real time. We focus the discussion of related work on approaches of using other camera and not in real time. We will also introduce some real-time skeleton reconstruction with one sigle camera.
+  \subsection{Multi View}
+  With multi-view setups markerless motion-captue solutions attain high accuracy, and it is also easy to get the depth information from multi-view.Most methods target high quality with offline computation \cite{Loper2014}\cite{twist}.Robustness could be increased with a combination of generative and discriminative estimation \cite{7299005}, even from a single input view \cite{Rosales2006}.
+  \subsection{Monocular Depth}
+  The depth channel provided by RGB-D sensors has led to robust real-time pose estimation solutions\cite{6126356}\cite{7457693}. Even real-time tracking of templete free reconstruction is now aviliable\cite{Dou:2016:FRP:2897824.2925969}.The depth information overcome forward-backward  ambiguities in monocular camera. Our goal is to use one webcam to achieve 2D or 3D skeleton reconstruct.
+  \subsection{Monocular RGB}
+  These approach is what we need, one is the real-time  full global 3D skeletal pose of a human in a stable, temporally consistent manner using a single RGB camera method \cite{VNect_SIGGRAPH2017}, but it cost much resource especially when we want to build a game on a poor platform.\\
+  Another is the openpose method\cite{cao2017realtime}\cite{wei2016cpm}, they efficiently detect the 2D pose of multiple people in an image. The approach uses a nonparametric representation to learn to associate body parts with individuals in the image. This is also the method we use.
+
 \section{Our Approach}
 	\subsection{Mask Generation}
 		\par We generate mask by taking a photo of a pose and the background first.

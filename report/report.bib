@@ -9,6 +9,43 @@
   publisher={ACM}
 }
 
+@inproceedings{VNect_SIGGRAPH2017,
+  author = {Mehta, Dushyant and Sridhar, Srinath and Sotnychenko, Oleksandr and Rhodin, Helge and Shafiei, Mohammad and Seidel, Hans-Peter and Xu, Weipeng and Casas, Dan and Theobalt, Christian},
+  title = {VNect: Real-time 3D Human Pose Estimation with a Single RGB Camera},
+  journal = {ACM Transactions on Graphics},
+  url = {http://gvv.mpi-inf.mpg.de/projects/VNect/},
+  numpages = {14},
+  volume={36},
+  number={4},
+  month = July,
+  year = {2017}
+  doi={10.1145/3072959.3073596}
+}
+
+  
+@Inbook{Baak2013,
+author="Baak, Andreas
+and M{\"u}ller, Meinard
+and Bharaj, Gaurav
+and Seidel, Hans-Peter
+and Theobalt, Christian",
+editor="Fossati, Andrea
+and Gall, Juergen
+and Grabner, Helmut
+and Ren, Xiaofeng
+and Konolige, Kurt",
+title="A Data-Driven Approach for Real-Time Full Body Pose Reconstruction from a Depth Camera",
+bookTitle="Consumer Depth Cameras for Computer Vision: Research Topics and Applications",
+year="2013",
+publisher="Springer London",
+address="London",
+pages="71--98",
+abstract="The 3D reconstruction of complex human motions from 2D color images is a challenging and sometimes intractable problem. The pose estimation problem becomes more feasible when using streams of 2.5D monocular depth images as provided by a depth camera. However, due to low resolution of and challenging noise characteristics in depth camera images as well as self-occlusions in the movements, the pose estimation task is still far from being simple. Furthermore, in real-time scenarios, the reconstruction task becomes even more challenging since global optimization strategies are prohibitive. To facilitate tracking of full-body human motions from a single depth-image stream, we introduce a data-driven hybrid strategy that combines local pose optimization with global retrieval techniques. Here, the final pose estimate at each frame is determined from the tracked and retrieved pose hypotheses which are fused using a fast selection scheme. Our algorithm reconstructs complex full-body poses in real time and effectively prevents temporal drifting, thus making it suitable for various real-time interaction scenarios.",
+isbn="978-1-4471-4640-7",
+doi="10.1007/978-1-4471-4640-7_5",
+url="https://doi.org/10.1007/978-1-4471-4640-7_5"
+}
+
 @inproceedings{panin2006efficient,
   title={An efficient and robust real-time contour tracking system},
   author={Panin, Giorgio and Ladikos, Alexander and Knoll, Alois},
@@ -60,3 +97,111 @@ url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=854761},
 volume = {2},
 year = {2000}
 }
+
+
+@Inbook{Loper2014,
+author="Loper, Matthew M.
+and Black, Michael J.",
+editor="Fleet, David
+and Pajdla, Tomas
+and Schiele, Bernt
+and Tuytelaars, Tinne",
+title="OpenDR: An Approximate Differentiable Renderer",
+bookTitle="Computer Vision -- ECCV 2014: 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part VII",
+year="2014",
+publisher="Springer International Publishing",
+address="Cham",
+pages="154--169",
+abstract="Inverse graphics attempts to take sensor data and infer 3D geometry, illumination, materials, and motions such that a graphics renderer could realistically reproduce the observed scene. Renderers, however, are designed to solve the forward process of image synthesis. To go in the other direction, we propose an approximate differentiable renderer (DR) that explicitly models the relationship between changes in model parameters and image observations. We describe a publicly available OpenDR framework that makes it easy to express a forward graphics model and then automatically obtain derivatives with respect to the model parameters and to optimize over them. Built on a new auto-differentiation package and OpenGL, OpenDR provides a local optimization method that can be incorporated into probabilistic programming frameworks. We demonstrate the power and simplicity of programming with OpenDR by using it to solve the problem of estimating human body shape from Kinect depth and RGB data.",
+isbn="978-3-319-10584-0",
+doi="10.1007/978-3-319-10584-0_11",
+url="https://doi.org/10.1007/978-3-319-10584-0_11"
+}
+@article{twist,
+author = {Bregler, C and Malik, Jitendra},
+year = {1998},
+month = {07},
+pages = {8 - 15},
+title = {Tracking people with twists and exponential maps},
+isbn = {0-8186-8497-6},
+booktitle = {Proceedings / CVPR, IEEE Computer Society Conference on Computer Vision and Pattern Recognition. IEEE Computer Society Conference on Computer Vision and Pattern Recognition}
+}
+
+@INPROCEEDINGS{7299005, 
+author={A. Elhayek and E. de Aguiar and A. Jain and J. Tompson and L. Pishchulin and M. Andriluka and C. Bregler and B. Schiele and C. Theobalt}, 
+booktitle={2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+title={Efficient ConvNet-based marker-less motion capture in general scenes with a low number of cameras}, 
+year={2015}, 
+volume={}, 
+number={}, 
+pages={3810-3818}, 
+keywords={image motion analysis;optimisation;pose estimation;tracking;ConvNet detection;ConvNet-based marker-less motion capture;analytic derivatives;appearance-based model-to-image similarity term;articulated skeleton motion;cameras;combined pose optimization energy;convolutional networks;discriminative image-based joint detection method;discriminative part-based pose detection method;iterative local optimization;kinematic skeleton model;model-based generative motion tracking algorithm;pose estimation energy;pose posterior;temporal stability;unary potentials;weighted sampling;Cameras;Computational modeling;Joints;Optimization;Three-dimensional displays;Tracking}, 
+doi={10.1109/CVPR.2015.7299005}, 
+ISSN={1063-6919}, 
+month={June},}
+
+
+@Article{Rosales2006,
+author="Rosales, R{\'O}Mer
+and Sclaroff, Stan",
+title="Combining Generative and Discriminative Models in a Framework for Articulated Pose Estimation",
+journal="International Journal of Computer Vision",
+year="2006",
+month="May",
+day="01",
+volume="67",
+number="3",
+pages="251--276",
+abstract="We develop a method for the estimation of articulated pose, such as that of the human body or the human hand, from a single (monocular) image. Pose estimation is formulated as a statistical inference problem, where the goal is to find a posterior probability distribution over poses as well as a maximum a posteriori (MAP) estimate. The method combines two modeling approaches, one discriminative and the other generative. The discriminative model consists of a set of mapping functions that are constructed automatically from a labeled training set of body poses and their respective image features. The discriminative formulation allows for modeling ambiguous, one-to-many mappings (through the use of multi-modal distributions) that may yield multiple valid articulated pose hypotheses from a single image. The generative model is defined in terms of a computer graphics rendering of poses. While the generative model offers an accurate way to relate observed (image features) and hidden (body pose) random variables, it is difficult to use it directly in pose estimation, since inference is computationally intractable. In contrast, inference with the discriminative model is tractable, but considerably less accurate for the problem of interest. A combined discriminative/generative formulation is derived that leverages the complimentary strengths of both models in a principled framework for articulated pose inference. Two efficient MAP pose estimation algorithms are derived from this formulation; the first is deterministic and the second non-deterministic. Performance of the framework is quantitatively evaluated in estimating articulated pose of both the human hand and human body.",
+issn="1573-1405",
+doi="10.1007/s11263-006-5165-4",
+url="https://doi.org/10.1007/s11263-006-5165-4"
+}
+
+
+@INPROCEEDINGS{6126356, 
+author={A. Baak and M. Müller and G. Bharaj and H. P. Seidel and C. Theobalt}, 
+booktitle={2011 International Conference on Computer Vision}, 
+title={A data-driven approach for real-time full body pose reconstruction from a depth camera}, 
+year={2011}, 
+volume={}, 
+number={}, 
+pages={1092-1099}, 
+keywords={cameras;image motion analysis;image reconstruction;object tracking;pose estimation;3D pose estimation;Dijkstra's algorithm;data-driven approach;data-driven hybrid strategy;depth camera;depth data;full-body motion tracking;global pose estimates;global retrieval techniques;local pose estimates;monocular 2.5D depth images;pose features;real-time frame rates;real-time full body pose reconstruction;real-time tracking;self-occlusions;single depth image stream;sparse Hausdorff distance;Cameras;Databases;Estimation;Joints;Optimization;Torso;Tracking}, 
+doi={10.1109/ICCV.2011.6126356}, 
+ISSN={1550-5499}, 
+month={Nov},}
+
+@ARTICLE{7457693, 
+author={M. Ye and Y. Shen and C. Du and Z. Pan and R. Yang}, 
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+title={Real-Time Simultaneous Pose and Shape Estimation for Articulated Objects Using a Single Depth Camera}, 
+year={2016}, 
+volume={38}, 
+number={8}, 
+pages={1517-1532}, 
+keywords={Gaussian processes;cameras;mixture models;pose estimation;probability;GPU;Gaussian mixture model;articulated deformation model;articulated objects;dynamic pose estimation process;exponential-maps-based parametrization;extra calibration procedure;mesh model;middle-range graphics card;personalized shape model;pipeline processing;probabilistic measurement model;real-time simultaneous pose estimation;real-time simultaneous shape estimation;shape adaptation algorithm;single depth camera;sphere-set model;statistical shape model;Adaptation models;Heuristic algorithms;Real-time systems;Sensors;Shape;Generative pose tracking;depth cues;motion;range data;real-time tracking;shape registration;surface fitting}, 
+doi={10.1109/TPAMI.2016.2557783}, 
+ISSN={0162-8828}, 
+month={Aug},}
+
+@article{Dou:2016:FRP:2897824.2925969,
+ author = {Dou, Mingsong and Khamis, Sameh and Degtyarev, Yury and Davidson, Philip and Fanello, Sean Ryan and Kowdle, Adarsh and Escolano, Sergio Orts and Rhemann, Christoph and Kim, David and Taylor, Jonathan and Kohli, Pushmeet and Tankovich, Vladimir and Izadi, Shahram},
+ title = {Fusion4D: Real-time Performance Capture of Challenging Scenes},
+ journal = {ACM Trans. Graph.},
+ issue_date = {July 2016},
+ volume = {35},
+ number = {4},
+ month = jul,
+ year = {2016},
+ issn = {0730-0301},
+ pages = {114:1--114:13},
+ articleno = {114},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/2897824.2925969},
+ doi = {10.1145/2897824.2925969},
+ acmid = {2925969},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {4D reconstruction, multi-view, nonrigid, real-time},
+} 
