@@ -143,14 +143,15 @@ Our goal is to get 2D or 3D stable skeleton from single webcam with out depth ch
         \par After getting the structure returned, we can check the workspace and withdraw the skeleton information. Skeleton data stored form is cell in matlab, we use the $jsonlab$ for each skeleton and convert data from cell to matrix once for all so as to running faster and handle easily.
 
 	\subsection{Noise}
-% TODO(Ernest) Insert image to illistrate the prroblem
+%TODO (Ernest) Insert image to illistrate the prroblem
 \par
-So far, background noise will not affect openpose, as they are not going to be regarded as human bodies. However, if another person is presented in front of the camera,for example, if a person happen to pass by,. It could bring confusion to the final judgment because the Openpose will detect two different person. In order to cancel out the noise, we implemented two different approaches.
+So far, background noise is no going to affect openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by,. It could bring confusion to the final judgment because the Openpose will detect two different person. In order to cancel out the noise, we implemented two different approaches.
 \subsubsection {Naive approach with assumption}
 \par
 First, given the assumption that the user is more close to the target than other people, we can simply calculate scores of all poses with the target mask and take the highest one as the player's score.
 \subsubsection{Body region tracking}
-% TODO fill in this part
+%TODO (Ernest) fill in this part
+Our approach is similiar to the approach in fragments-based tracking  \cite{1640835}. We made serveral sacrifices due to real-time performance. One main reason is that we are using MATLAB, so we need a really simple and fast approach.
 \section{Experiment}
 	\subsection{Weight on Skeleton}
       \par In order to compare the closeness degree between the skeletons of player and mask provided, our initial idea is to add up euclidean distances of corresponding points if their reliability both higher than threshold value we set. We consider the sum as $loss$. So if $loss$ is bigger than threshold value or the total number of reliable correspondence is less than expected, we will determine the player to lose the match. The naive judgment works well in practice.
