@@ -93,7 +93,7 @@ Our goal is to get 2D or 3D stable skeleton from single webcam with out depth ch
   \subsection{Body Region Tracking}
   Recently, lots of research has been developed on body (object) tracking including features-based tracking, counter-based tracking \cite{panin2006efficient} and region-based tracking \cite{1640835}.
   \par
-  In region-based tracking, lots of different approaches have been developed for tracking non-rigid object. The shape human body, unlike that of rigid objects, will change with body movement. 
+  In region-based tracking, lots of different approaches have been developed for tracking non-rigid object. The shape human body, unlike that of rigid objects, will change with body movement.
   \par
   In 2006, A. Adam and E. Rivlin and I. Shimshoni proposed a robust approach with fragments-based tracking. In 2014, Kwon proposed double bounding box approach to handle ambiguous regions. \cite{Kwon2014}
 
@@ -128,7 +128,7 @@ Our goal is to get 2D or 3D stable skeleton from single webcam with out depth ch
 		\par
 		After finishing version 1, because the following reason, we start to implement several crucial improvements in later versions, which is introduced following.
 		\begin{itemize}
-		\item The cropped body is greatly affected by noise in the background (like moving object). 
+		\item The cropped body is greatly affected by noise in the background (like moving object).
 		\item Camera shaking and ambiguity with body and background have great impact on the final result.
 		\end{itemize}
 	\subsection{Openpose\cite{cao2017realtime}}
@@ -158,7 +158,9 @@ Our approach is similiar to the approach in fragments-based tracking  \cite{1640
       \par To improve the judgment based on our ideas such as the pose of trunk should important than limbs, we intend to assign different weight to keypoints in skeleton. Then the influence of each parts unmatched is different. But in experiment, this method doesn't preform better than the naive implementation. In the end, our implementation is still using the naive version.
   \subsection{Noise Cancellation Parameter}
 \section{Conclusion}
-
+    \par A realtime single RGB-camera based somatosensory game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
+    \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledged learned from class into practical work also consolidated our knowledge and improved our programming skills.
+    \par Of course there are still some remaining problems to which we have not figured out best solutions, such as a better comparison strategy or noise cancellation scheme. And what's more, we'd better design a more user-friendly UI. Harder masks should be created as well in order to increase the difficulty of the game and make it more interesting. All in all, a lot of improvements can be made if we want to create a real game with high playability.
 
 {\small
 \bibliographystyle{ieee}
