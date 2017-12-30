@@ -82,19 +82,25 @@ ShanghaiTech University\\
     \par In both versions, we have no need to care about object noise. But there may be circumstances where some unexpected passers-by appear resulting in the ambiguity of deciding which is the player. To deal with this kind of noise, we have tried out two solutions. One is called \emph{highest wins} strategy, and the other bases on \emph{trajectory predition}. The efforts on noise cancellation are presented in the subsection Noise.
     \par We also did some experiments to improve the system further. In Section 4, the trials about \emph{weights on skeleton} and \emph{noise cancellation parameters} are introduced in detail respectively.
 \section{Related Work}
-Our goal is to get 2D or 3D stable skeleton from sigle webcam with out depth channal(using only RGB) in real time. We focus the discussion of related work on approaches of using other camera and not in real time. We will also introduce some real-time skeleton reconstruction with one sigle camera.
+Our goal is to get 2D or 3D stable skeleton from single webcam with out depth channel(using only RGB) in real time. We focus the discussion of related work on approaches of using other camera and not in real time. We will also introduce some real-time skeleton reconstruction with one single camera.
   \subsection{Multi View}
-  With multi-view setups markerless motion-captue solutions attain high accuracy, and it is also easy to get the depth information from multi-view.Most methods target high quality with offline computation \cite{Loper2014}\cite{twist}.Robustness could be increased with a combination of generative and discriminative estimation \cite{7299005}, even from a single input view \cite{Rosales2006}.
+  With multi-view setups markerless motion-capture solutions attain high accuracy, and it is also easy to get the depth information from multi-view.Most methods target high quality with offline computation \cite{Loper2014}\cite{twist}.Robustness could be increased with a combination of generative and discriminative estimation \cite{7299005}, even from a single input view \cite{Rosales2006}.
   \subsection{Monocular Depth}
-  The depth channel provided by RGB-D sensors has led to robust real-time pose estimation solutions\cite{6126356}\cite{7457693}. Even real-time tracking of templete free reconstruction is now aviliable\cite{Dou:2016:FRP:2897824.2925969}.The depth information overcome forward-backward  ambiguities in monocular camera. Our goal is to use one webcam to achieve 2D or 3D skeleton reconstruct.
+  The depth channel provided by RGB-D sensors has led to robust real-time pose estimation solutions\cite{6126356}\cite{7457693}. Even real-time tracking of templete free reconstruction is now available\cite{Dou:2016:FRP:2897824.2925969}.The depth information overcome forward-backward  ambiguities in monocular camera. Our goal is to use one webcam to achieve 2D or 3D skeleton reconstruct.
   \subsection{Monocular RGB}
   These approach is what we need, one is the real-time  full global 3D skeletal pose of a human in a stable, temporally consistent manner using a single RGB camera method \cite{VNect_SIGGRAPH2017}, but it cost much resource especially when we want to build a game on a poor platform.\\
   Another is the openpose method\cite{cao2017realtime}\cite{wei2016cpm}, they efficiently detect the 2D pose of multiple people in an image. The approach uses a nonparametric representation to learn to associate body parts with individuals in the image. This is also the method we use.
+  \subsection{Body Region Tracking}
+  Recently, lots of research has been developed on body (object) tracking including features-based tracking, counter-based tracking \cite{panin2006efficient} and region-based tracking \cite{1640835}.
+  \par
+  In region-based tracking, lots of different approaches have been developed for tracking non-rigid object. The shape human body, unlike that of rigid objects, will change with body movement. 
+  \par
+  In 2006, A. Adam and E. Rivlin and I. Shimshoni proposed a robust approach with fragments-based tracking. In 2014, Kwon proposed double bounding box approach to handle ambiguous regions. \cite{Kwon2014}
 
 \section{Technical Approach}
 	\subsection{Mask Generation}
 		\par We generate mask by taking a photo of a pose and the background first.
-		Then we substract the image to get the binary mask of the pose.
+		Then we subtract the image to get the binary mask of the pose.
 		We also use Openpose to generate a skeleton data and image.
 		\begin{figure}[h]
 			\centering
@@ -119,6 +125,12 @@ Our goal is to get 2D or 3D stable skeleton from sigle webcam with out depth cha
 			\includegraphics[width=0.9\linewidth]{./Pic/flowchart.png}
 			\caption{Pipeline for image processing in Version One.}
 		\end{figure}
+		\par
+		After finishing version 1, because the following reason, we start to implement several crucial improvements in later versions, which is introduced following.
+		\begin{itemize}
+		\item The cropped body is greatly affected by noise in the background (like moving object). 
+		\item Camera shaking and ambiguity with body and background have great impact on the final result.
+		\end{itemize}
 	\subsection{Openpose\cite{cao2017realtime}}
 	    \par To generate a skeleton we have to generate confidence map using which we can determine where the joint is.
 		Each joint is self-defined, so joint here can be eyes and ears.
@@ -127,13 +139,13 @@ Our goal is to get 2D or 3D stable skeleton from sigle webcam with out depth cha
 		\par With joints and connection cost, how to connect joints become a bipartite graph maximum matching problem.
 		\par We used the binary executable\cite{cao2017realtime} when testing. We will take the last image and give it to the executable. The executable will generate a json file describing each detected joint for each person.
 	    \subsubsection{Json}
-        \par As the skeleton information returned from openpose is json, we need to extract information from it and use in Matlab. So we use a builted string manipulation library for json. The license is in $jsonlab$ folder.
+        \par As the skeleton information returned from openpose is json, we need to extract information from it and use in Matlab. So we use a built string manipulation library for json. The license is in $jsonlab$ folder.
         \par After getting the structure returned, we can check the workspace and withdraw the skeleton information. Skeleton data stored form is cell in matlab, we use the $jsonlab$ for each skeleton and convert data from cell to matrix once for all so as to running faster and handle easily.
 
 	\subsection{Noise}
 % TODO(Ernest) Insert image to illistrate the prroblem
 \par
-So far, background noise will not affect openpose, as they are not going to be regarded as human bodies. However, if another person is presented in front of the camera,for example, if a person happen to pass by,. It could bring confusion to the final jugement because the Openpose will dertect two different person. In order to cancel out the noise, we implemented two different approaches.
+So far, background noise will not affect openpose, as they are not going to be regarded as human bodies. However, if another person is presented in front of the camera,for example, if a person happen to pass by,. It could bring confusion to the final judgment because the Openpose will detect two different person. In order to cancel out the noise, we implemented two different approaches.
 \subsubsection {Naive approach with assumption}
 \par
 First, given the assumption that the user is more close to the target than other people, we can simply calculate scores of all poses with the target mask and take the highest one as the player's score.
@@ -141,8 +153,8 @@ First, given the assumption that the user is more close to the target than other
 % TODO fill in this part
 \section{Experiment}
 	\subsection{Weight on Skeleton}
-      \par In order to compare the closeness degree between the skeletons of player and mask provided, our initial idea is to add up euclidean distances of corresponding points if their reliability both higher than threshold value we set. We consider the sum as $loss$. So if $loss$ is bigger than threshold value or the totol number of reliable correspondence is less than expected, we will determine the player to lose the match. The naive judgement works well in practice.
-      \par To improve the juagement based on our ideas such as the pose of trunk should important than limbs, we intend to assign diffenent weight to keypoints in skeleton. Then the influence of each parts unmatched is different. But in experiment, this method doesn't preform better than the naive implementation. In the end, our implementation is still using the naive version.
+      \par In order to compare the closeness degree between the skeletons of player and mask provided, our initial idea is to add up euclidean distances of corresponding points if their reliability both higher than threshold value we set. We consider the sum as $loss$. So if $loss$ is bigger than threshold value or the total number of reliable correspondence is less than expected, we will determine the player to lose the match. The naive judgment works well in practice.
+      \par To improve the judgment based on our ideas such as the pose of trunk should important than limbs, we intend to assign different weight to keypoints in skeleton. Then the influence of each parts unmatched is different. But in experiment, this method doesn't preform better than the naive implementation. In the end, our implementation is still using the naive version.
   \subsection{Noise Cancellation Parameter}
 \section{Conclusion}
 
