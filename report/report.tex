@@ -151,7 +151,11 @@ First, given the assumption that the user is more close to the target than other
 \par
 However, we realized that if someone is intentionally testing the system, it does not make sense if we can't identify player and other people. As the result, we are using a simplified body region tracking approach.
 \subsubsection{Body region tracking}
-%TODO insert a figure of the general pipeline.
+      \begin{figure}[h]
+      \centering
+      \includegraphics[width=\linewidth]{./Pic/tracking-pipeline.png}
+      \caption{The pipeline for the tracking part}
+      \end{figure}
 \par
 Our approach is similiar to the approach in fragments-based tracking  \cite{1640835}. We made serveral sacrifices due to real-time performance. Because  we are using MATLAB, so we need a really simple and fast approach. 
 \par
@@ -172,7 +176,6 @@ Our approach is using the outter bounding box (OBB) to represent the body patch.
       \caption{FAST corner extarction (left) and SURF descriptors (right). Only a little unstable features are extarcted.}
       \end{figure}
 We are using three low-level featuers to track the player: position on 2D image plane, size of the bounding box, and the color histogram. The main reason is that features extraction and descriptors, like FAST \cite{1544896} and SURF \cite{Bay2006}, have poor performance on textureless clothes, occulusion, and non-rigid objects.
-%TODO insert FAST and SURF descriptor image.
 \subsubsection*{Define scores}
 There is a various ways on define the score functions for each feature, the general priciple is that 
 \begin{itemize}
@@ -240,6 +243,14 @@ color score is simply the number of there coresponsing bins.
       \caption{Tracking Reult (Frame 351). Player in blue is highlighted with an outter bounding box, and passby person will not be identified as player.}
 	\label{tracking}      
 \end{figure}
+\subsubsection{Real Time}
+\begin{figure}[h]
+      \centering
+      \includegraphics[width=0.8\linewidth]{./Pic/time.png}
+      \caption{offline MATLAB time profiling result on a 16-second vedio, containing 464 frames in total. The total time used is 25.457s, where half of the time is used for IO operation.}
+\label{timing}      
+\end{figure}
+ The result is shown in fig. \ref{timing}.  In real application, IO operation time can be avoid as the image stream will not go through the disk. As the result, in real application, the second assumption about frame rate can be achieved even with MATLAB.
 \section{Conclusion}
     \par A realtime single RGB-camera based somatosensory game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
     \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledged learned from class into practical work also consolidated our knowledge and improved our programming skills.
