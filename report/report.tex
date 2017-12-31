@@ -84,9 +84,9 @@ ShanghaiTech University\\
     \par In Section 3, we will propose two versions of implementations. In the first version, we apply direct subtraction to get the body part of the player and return a pass if the overlap of body and mask is greater than a threshold. More details are included in the subsection Version One. Since this naive version is parameter-dependent and has low robustness, we implement a more advanced version based on a previous work \textit{Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields}\cite{cao2017realtime}. Specifically, we compare the skeletons of the mask and the player and define a loss function computing the euclidean distance. Likewise, the system returns a pass if the loss is smaller than a threshold. More details about this version are included in the subsection Openpose.
 <<<<<<< HEAD
     \par In both versions, we have no need to care about object noise. But there may be circumstances where some unexpected passers-by appear resulting in the ambiguity of deciding which is the player. To deal with this kind of noise, we have tried out two solutions. One is called \emph{highest wins} strategy, and the other bases on \emph{trajectory perdition}. The efforts on noise cancellation are presented in the subsection Noise.
-=======
+
     \par In both versions, we have no need to care about object noise. But there may be circumstances where some unexpected passers-by appear resulting in the ambiguity of deciding which is the player. To deal with this kind of noise, we have tried out two solutions. One is called \emph{highest wins} strategy, and the other bases on \emph{body region tracking}. The efforts on noise cancellation are presented in the subsection Noise.
->>>>>>> 6476709a8810acd6f63e9df09ec629fd54155e95
+
     \par We also did some experiments to improve the system further. In Section 4, the trials about \emph{weights on skeleton} and \emph{noise cancellation parameters} are introduced in detail respectively.
     \par
     The difficulty of monocular RGB camera mainly lies in:
@@ -159,11 +159,11 @@ Our goal is to get 2D or 3D stable skeleton from single web-cam with out depth c
 
 	\subsection{Noise}
 \par
-<<<<<<< HEAD
+
 So far, background noise is no going to affect Openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by. (As is shown in fig. \ref{tracking} ) It could bring confusion to the final judgment because the Openpose will detect two different person. We implemented two different approaches to solve that problem.
-=======
+
 So far, background noise is no going to affect openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by. (As is shown in fig. \ref{tracking} ) It could bring confusion to the final judgment because the Openpose will detect two different person. We implemented two different approaches to solve that problem.
->>>>>>> 6476709a8810acd6f63e9df09ec629fd54155e95
+
 \subsubsection {Naive approach with assumption}
 \par
 First, given the assumption that the user is more close to the target than other people, we can simply calculate scores for every body pose and take the highest one as the player's score.
@@ -176,11 +176,11 @@ However, we realized that if someone is intentionally testing the system, it doe
       \caption{The pipeline for the tracking part}
       \end{figure}
 \par
-<<<<<<< HEAD
+
 Our approach is similar to the approach in fragments-based tracking  \cite{1640835}. We made several sacrifices due to real-time performance. Because  we are using MATLAB, so we need a really simple and fast approach. 
-=======
+
 Our approach is similiar to the approach in fragments-based tracking  \cite{1640835}. We made several sacrifices due to real-time performance. Because  we are using MATLAB, so we need a really simple and fast approach. 
->>>>>>> 6476709a8810acd6f63e9df09ec629fd54155e95
+
 \par
 \subsubsection*{Assumptions}
 \begin{itemize}
@@ -198,11 +198,11 @@ Our approach is using the outer bounding box (OBB) to represent the body patch. 
 	\includegraphics[width=0.45\linewidth]{./Pic/SURF.png}
       \caption{FAST corner extraction (left) and SURF descriptors (right). Only a little unstable features are extracted.}
       \end{figure}
-<<<<<<< HEAD
+
 We are using three low-level features to track the player: position on 2D image plane, size of the bounding box, and the color histogram. The main reason is that features extraction and descriptors, like FAST \cite{1544896} and SURF \cite{Bay2006}, have poor performance on texture-less clothes, occlusion, and non-rigid objects.
-=======
+
 We are using three low-level features to track the player: position on 2D image plane, size of the bounding box, and the color histogram. The main reason is that features extraction and descriptors, like FAST \cite{1544896} and SURF \cite{Bay2006}, have poor performance on texture less clothes, occlusion, and non-rigid objects.
->>>>>>> 6476709a8810acd6f63e9df09ec629fd54155e95
+
 \subsubsection*{Define scores}
 There is a various ways on define the score functions for each feature, the general principle is that 
 \begin{itemize}
@@ -276,22 +276,22 @@ Results are shown in fig. \ref{tracking}.
 \begin{figure}[h]
       \centering
       \includegraphics[width=0.8\linewidth]{./Pic/time.png}
-<<<<<<< HEAD
+
       \caption{off-line MATLAB time profiling result on a 16-second video, containing 464 frames in total. The total time used is 25.457 s, where half of the time is used for IO operation.}
-=======
+
       \caption{off-line MATLAB time profiling result on a 16-second video, containing 464 frames in total. The total time used is 25.457s, where half of the time is used for IO operation.}
->>>>>>> 6476709a8810acd6f63e9df09ec629fd54155e95
+
 \label{timing}      
 \end{figure}
  The off-line MATLAB profiling result on a 16-second video is shown in fig. \ref{timing}.  In real application, IO operation time can be avoid as the image stream will not go through the disk. As the result, in real application, the second assumption about frame rate can be achieved even with MATLAB.
 \section{Conclusion}
-<<<<<<< HEAD
+
     \par A real-time single RGB-camera based somatosensory game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
     \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledges learned from class into practical work also consolidated our knowledge and improved our programming skills.
-=======
+
     \par A realtime single RGB-camera based somatic game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
     \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledge learned from class into practical work also consolidated our knowledge and improved our programming skills.
->>>>>>> 6476709a8810acd6f63e9df09ec629fd54155e95
+
     \par Of course there are still some remaining problems to which we have not figured out best solutions, such as a better comparison strategy or noise cancellation scheme. And what's more, we'd better design a more user-friendly UI. Harder masks should be created as well in order to increase the difficulty of the game and make it more interesting. All in all, a lot of improvements can be made if we want to create a real game with high playability.
 
 \section{Attachment (Code)}
