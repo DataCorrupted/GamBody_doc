@@ -5,7 +5,7 @@
 \usepackage{epsfig}
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{amssymb} 
 \usepackage[breaklinks=true,bookmarks=false]{hyperref}
 \usepackage{color}
 \usepackage{indentfirst}
@@ -82,17 +82,17 @@ ShanghaiTech University\\
         In our work, we will be using one single camera to track person. It will also give player a bounding box (moving wall), which is remarked as a mask in the system.
         The mask and player's body part is compared by our system, the return should be a pass (True) or no pass (False). More details about our technical approaches are in Section 3. And the subsection Mask Generation introduces how to generate masks.
     \par In Section 3, we will propose two versions of implementations. In the first version, we apply direct subtraction to get the body part of the player and return a pass if the overlap of body and mask is greater than a threshold. More details are included in the subsection Version One. Since this naive version is parameter-dependent and has low robustness, we implement a more advanced version based on a previous work \textit{Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields}\cite{cao2017realtime}. Specifically, we compare the skeletons of the mask and the player and define a loss function computing the euclidean distance. Likewise, the system returns a pass if the loss is smaller than a threshold. More details about this version are included in the subsection Openpose.
-    \par In both versions, we have no need to care about object noise. But there may be circumstances where some unexpected passers-by appear resulting in the ambiguity of deciding which is the player. To deal with this kind of noise, we have tried out two solutions. One is called \emph{highest wins} strategy, and the other bases on \emph{trajectory predition}. The efforts on noise cancellation are presented in the subsection Noise.
+    \par In both versions, we have no need to care about object noise. But there may be circumstances where some unexpected passers-by appear resulting in the ambiguity of deciding which is the player. To deal with this kind of noise, we have tried out two solutions. One is called \emph{highest wins} strategy, and the other bases on \emph{trajectory perdition}. The efforts on noise cancellation are presented in the subsection Noise.
     \par We also did some experiments to improve the system further. In Section 4, the trials about \emph{weights on skeleton} and \emph{noise cancellation parameters} are introduced in detail respectively.
 \section{Related Work}
-Our goal is to get 2D or 3D stable skeleton from single webcam with out depth channel(using only RGB) in real time. We focus the discussion of related work on approaches of using other camera and not in real time. We will also introduce some real-time skeleton reconstruction with one single camera.
+Our goal is to get 2D or 3D stable skeleton from single web-cam with out depth channel(using only RGB) in real time. We focus the discussion of related work on approaches of using other camera and not in real time. We will also introduce some real-time skeleton reconstruction with one single camera.
   \subsection{Multi View}
-  With multi-view setups markerless motion-capture solutions attain high accuracy, and it is also easy to get the depth information from multi-view.Most methods target high quality with offline computation \cite{Loper2014}\cite{twist}.Robustness could be increased with a combination of generative and discriminative estimation \cite{7299005}, even from a single input view \cite{Rosales2006}.
+  With multi-view setups marker-less motion-capture solutions attain high accuracy, and it is also easy to get the depth information from multi-view.Most methods target high quality with off-line computation \cite{Loper2014}\cite{twist}.Robustness could be increased with a combination of generative and discriminative estimation \cite{7299005}, even from a single input view \cite{Rosales2006}.
   \subsection{Monocular Depth}
-  The depth channel provided by RGB-D sensors has led to robust real-time pose estimation solutions\cite{6126356}\cite{7457693}. Even real-time tracking of templete free reconstruction is now available\cite{Dou:2016:FRP:2897824.2925969}.The depth information overcome forward-backward  ambiguities in monocular camera. Our goal is to use one webcam to achieve 2D or 3D skeleton reconstruct.
+  The depth channel provided by RGB-D sensors has led to robust real-time pose estimation solutions\cite{6126356}\cite{7457693}. Even real-time tracking of template free reconstruction is now available\cite{Dou:2016:FRP:2897824.2925969}.The depth information overcome forward-backward  ambiguities in monocular camera. Our goal is to use one web cam to achieve 2D or 3D skeleton reconstruct.
   \subsection{Monocular RGB}
   These approach is what we need, one is the real-time  full global 3D skeletal pose of a human in a stable, temporally consistent manner using a single RGB camera method \cite{VNect_SIGGRAPH2017}, but it cost much resource especially when we want to build a game on a poor platform.\\
-  Another is the openpose method\cite{cao2017realtime}\cite{wei2016cpm}, they efficiently detect the 2D pose of multiple people in an image. The approach uses a nonparametric representation to learn to associate body parts with individuals in the image. This is also the method we use.
+  Another method to detect body pose is called Openpose \cite{cao2017realtime}\cite{wei2016cpm}, they efficiently detect the 2D pose of multiple people in an image. The approach uses a nonparametric representation to learn to associate body parts with individuals in the image. This is also the method we use.
   \subsection{Body Region Tracking}
   Recently, lots of research has been developed on body (object) tracking including features-based tracking, counter-based tracking \cite{panin2006efficient} and region-based tracking \cite{1640835}.
   \par
@@ -120,9 +120,9 @@ Our goal is to get 2D or 3D stable skeleton from single webcam with out depth ch
 	\subsection{Version One}
         \par We implemented a first version of system in the early stage of this project. To achieve real-time image processing and displaying, we keep on capturing an image from the camera stream, modifying the image, and showing it on the screen. An infinite loop is kept so. For image processing, the pipeline is shown in Figure 5.
         \par Based on the fact that the background doesn't change during the game time, we capture a background image at the very beginning. Subtracting it from the image having the player, the body part is obtained roughly, which is just the remainder.
-        \par However, the subtraction result may have some noise, especially the edges because of the unavoidable camera shake. To eliminate the edge effects, we use a gaussian filter to blur the images before doing subtraction.
+        \par However, the subtraction result may have some noise, especially the edges because of the unavoidable camera shake. To eliminate the edge effects, we use a Gaussian filter to blur the images before doing subtraction.
         \par Another problem remained is that the body detected may be isolated, particularly the head. So we have to find the two maximum connected components and combine them together to get the complete body part.
-        \par Finally, provided with the mask image and the body image, we compare them by computing the normalized correlation ratio. If the maximum value (the best match ratio) is greater than a pre-set threshold, the system returns a pass to the player.
+        \par Finally, provided with the mask image and the body image, we compare them by computing the normalized correlation ratio. If the maximum value (the best match ratio) is greater than a pre-defined threshold, the system returns a pass to the player.
         \begin{figure}[htbp]
 			\centering
 			\includegraphics[width=0.9\linewidth]{./Pic/flowchart.png}
@@ -142,12 +142,12 @@ Our goal is to get 2D or 3D stable skeleton from single webcam with out depth ch
 		\par With joints and connection cost, how to connect joints become a bipartite graph maximum matching problem.
 		\par We used the binary executable\cite{cao2017realtime} when testing. We will take the last image and give it to the executable. The executable will generate a json file describing each detected joint for each person.
 	    \subsubsection{Json}
-        \par As the skeleton information returned from openpose is json, we need to extract information from it and use in Matlab. So we use a built string manipulation library for json. The license is in $jsonlab$ folder.
-        \par After getting the structure returned, we can check the workspace and withdraw the skeleton information. Skeleton data stored form is cell in matlab, we use the $jsonlab$ for each skeleton and convert data from cell to matrix once for all so as to running faster and handle easily.
+        \par As the skeleton information returned from Openpose is json, we need to extract information from it and use in MATLAB. So we use a built string manipulation library for json. The license is in $jsonlab$ folder.
+        \par After getting the structure returned, we can check the workspace and withdraw the skeleton information. Skeleton data stored form is cell in MATLAB, we use the $jsonlab$ for each skeleton and convert data from cell to matrix once for all so as to running faster and handle easily.
 
 	\subsection{Noise}
 \par
-So far, background noise is no going to affect openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by. (As is shown in fig. \ref{tracking} ) It could bring confusion to the final judgment because the Openpose will detect two different person. We implemented two different approaches to slove that problem.
+So far, background noise is no going to affect Openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by. (As is shown in fig. \ref{tracking} ) It could bring confusion to the final judgment because the Openpose will detect two different person. We implemented two different approaches to solve that problem.
 \subsubsection {Naive approach with assumption}
 \par
 First, given the assumption that the user is more close to the target than other people, we can simply calculate scores for every body pose and take the highest one as the player's score.
@@ -160,34 +160,34 @@ However, we realized that if someone is intentionally testing the system, it doe
       \caption{The pipeline for the tracking part}
       \end{figure}
 \par
-Our approach is similiar to the approach in fragments-based tracking  \cite{1640835}. We made serveral sacrifices due to real-time performance. Because  we are using MATLAB, so we need a really simple and fast approach. 
+Our approach is similar to the approach in fragments-based tracking  \cite{1640835}. We made several sacrifices due to real-time performance. Because  we are using MATLAB, so we need a really simple and fast approach. 
 \par
 \subsubsection*{Assumptions}
 \begin{itemize}
 \item The player is always in front of the camera.
-\item The camera frame rate is high enough so that the player's shape and location will change continously and slightly each frame.
+\item The camera frame rate is high enough so that the player's shape and location will change continuously and slightly each frame.
 \item The player has pre-recorded images or he can submit those image in the initialization stage of the game.
 \end{itemize}
 \subsubsection*{Body Patch Representation}
 \par
-Our approach is using the outter bounding box (OBB) to represent the body patch. We regard the whole bounding box as one large patch and does not split it up for real-time performance.
+Our approach is using the outer bounding box (OBB) to represent the body patch. We regard the whole bounding box as one large patch and does not split it up for real-time performance.
 \subsubsection*{Define features}
       \begin{figure}[h]
       \centering
       \includegraphics[width=0.45\linewidth]{./Pic/FAST.png}
 	\includegraphics[width=0.45\linewidth]{./Pic/SURF.png}
-      \caption{FAST corner extarction (left) and SURF descriptors (right). Only a little unstable features are extarcted.}
+      \caption{FAST corner extraction (left) and SURF descriptors (right). Only a little unstable features are extracted.}
       \end{figure}
-We are using three low-level featuers to track the player: position on 2D image plane, size of the bounding box, and the color histogram. The main reason is that features extraction and descriptors, like FAST \cite{1544896} and SURF \cite{Bay2006}, have poor performance on textureless clothes, occulusion, and non-rigid objects.
+We are using three low-level features to track the player: position on 2D image plane, size of the bounding box, and the color histogram. The main reason is that features extraction and descriptors, like FAST \cite{1544896} and SURF \cite{Bay2006}, have poor performance on texture-less clothes, occlusion, and non-rigid objects.
 \subsubsection*{Define scores}
-There is a various ways on define the score functions for each feature, the general priciple is that 
+There is a various ways on define the score functions for each feature, the general principle is that 
 \begin{itemize}
-\item The smaller the position change of the player between adjacent frame, the similiar those two patches are.
-\item The smaller the size of OBB changes, the similiar those two patches are.
-\item For color histogram, simply calculate the coresponsing bins would be enough. Of course, it is possible to change to other distance measurements.
+\item The smaller the position change of the player between adjacent frame, the similar those two patches are.
+\item The smaller the size of OBB changes, the similar those two patches are.
+\item For color histogram, simply calculate the corresponding bins would be enough. Of course, it is possible to change to other distance measurements.
 \end{itemize}
 \par
-In the end, all three scores are weighted sum up to give a total score for each possible matching pair. Detail score defination will be shown in the experiment section.
+In the end, all three scores are weighted sum up to give a total score for each possible matching pair. Detail score definition will be shown in the experiment section.
 \subsubsection*{Robustness}
 \begin{figure}[h]
       \centering
@@ -210,7 +210,7 @@ Because we use OBB as one big patch, this sacrifice rubustness for real-time per
       \end{figure}
 
       \par In order to compare the closeness degree between the skeletons of player and mask provided, our initial idea is to add up euclidean distances of corresponding points if their reliability both higher than threshold value we set. We consider the sum as $loss$. So if $loss$ is bigger than threshold value or the total number of reliable correspondence is less than expected, we will determine the player to lose the match. The naive judgment works well in practice.
-      \par To improve the judgment based on our ideas such as the pose of trunk should important than limbs, we intend to assign different weight to keypoints in skeleton. Then the influence of each parts unmatched is different. But in experiment, this method doesn't preform better than the naive implementation. In the end, our implementation is still using the naive version.
+      \par To improve the judgment based on our ideas such as the pose of trunk should important than limbs, we intend to assign different weight to key-points in skeleton. Then the influence of each parts unmatched is different. But in experiment, this method doesn't preform better than the naive implementation. In the end, our implementation is still using the naive version.
   \subsection{Body Region Tracking}
 \subsubsection{Score function used in real scene}
 The score function are defined as an equal combination of position score, size score and color histogram score.
@@ -237,7 +237,7 @@ size score: (A is the OBB of current frame, B is OBB of previous frame, w is wit
   \end{equation}
 
 \par
-color score is simply the number of there coresponsing bins.
+color score is simply the number of there corresponding bins.
 
 \subsubsection{Tracking Result}
 \begin{figure}[h]
@@ -250,13 +250,13 @@ color score is simply the number of there coresponsing bins.
 \begin{figure}[h]
       \centering
       \includegraphics[width=0.8\linewidth]{./Pic/time.png}
-      \caption{offline MATLAB time profiling result on a 16-second vedio, containing 464 frames in total. The total time used is 25.457s, where half of the time is used for IO operation.}
+      \caption{off-line MATLAB time profiling result on a 16-second video, containing 464 frames in total. The total time used is 25.457 s, where half of the time is used for IO operation.}
 \label{timing}      
 \end{figure}
  The result is shown in fig. \ref{timing}.  In real application, IO operation time can be avoid as the image stream will not go through the disk. As the result, in real application, the second assumption about frame rate can be achieved even with MATLAB.
 \section{Conclusion}
-    \par A realtime single RGB-camera based somatosensory game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
-    \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledged learned from class into practical work also consolidated our knowledge and improved our programming skills.
+    \par A real-time single RGB-camera based somatosensory game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
+    \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledges learned from class into practical work also consolidated our knowledge and improved our programming skills.
     \par Of course there are still some remaining problems to which we have not figured out best solutions, such as a better comparison strategy or noise cancellation scheme. And what's more, we'd better design a more user-friendly UI. Harder masks should be created as well in order to increase the difficulty of the game and make it more interesting. All in all, a lot of improvements can be made if we want to create a real game with high playability.
 
 {\small
