@@ -58,7 +58,7 @@ ShanghaiTech University\\
 }
 
 \maketitle
-
+%TODO add github link maybe, note that the version with body region tracking is not v2.0 (master), it is on the branch v2.2.
 \begin{abstract}
 
 \end{abstract}
@@ -145,18 +145,80 @@ Our goal is to get 2D or 3D stable skeleton from single webcam with out depth ch
 	\subsection{Noise}
 %TODO (Ernest) Insert image to illistrate the prroblem
 \par
-So far, background noise is no going to affect openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by,. It could bring confusion to the final judgment because the Openpose will detect two different person. In order to cancel out the noise, we implemented two different approaches.
+So far, background noise is no going to affect openpose, as they will not be regarded as human bodies. However, if another person is presented in front of the camera, like if a person happen to pass by. It could bring confusion to the final judgment because the Openpose will detect two different person. We implemented two different approaches to slove that problem.
 \subsubsection {Naive approach with assumption}
 \par
-First, given the assumption that the user is more close to the target than other people, we can simply calculate scores of all poses with the target mask and take the highest one as the player's score.
+First, given the assumption that the user is more close to the target than other people, we can simply calculate scores for every body pose and take the highest one as the player's score.
+\par
+However, we realized that if someone is intentionally testing the system, it does not make sense if we can't identify player and other people. As the result, we are using a simplified body region tracking approach.
 \subsubsection{Body region tracking}
 %TODO (Ernest) fill in this part
-Our approach is similiar to the approach in fragments-based tracking  \cite{1640835}. We made serveral sacrifices due to real-time performance. One main reason is that we are using MATLAB, so we need a really simple and fast approach.
+%TODO insert a figure of the general pipeline.
+\par
+Our approach is similiar to the approach in fragments-based tracking  \cite{1640835}. We made serveral sacrifices due to real-time performance. Because  we are using MATLAB, so we need a really simple and fast approach. 
+\par
+\subsubsection*{Assumptions}
+\begin{itemize}
+\item The player is always in front of the camera.
+\item The camera frame rate is high enough so that the player's shape and location will change continously and slightly each frame.
+\item The player has pre-recorded images or he can submit those image in the initialization stage of the game.
+\end{itemize}
+\subsubsection*{Body Patch Representation}
+\par
+Our approach is using the outter bounding box (OBB) to represent the body patch. We regard the whole bounding box as one large patch and does not split it up for real-time performance.
+\subsubsection*{Define features}
+We are using three low-level featuers to track the player: position on 2D image plane, size of the bounding box, and the color histogram. The main reason is that features extraction and descriptors, like FAST \cite{1544896} and SURF \cite{Bay2006}, have poor performance on textureless clothes, occulusion, and non-rigid objects.
+%TODO insert FAST and SURF descriptor image.
+\subsubsection*{Define scores}
+There is a various ways on define the score functions for each feature, the general priciple is that 
+\begin{itemize}
+\item The smaller the position change of the player between adjacent frame, the similiar those two patches are.
+\item The smaller the size of OBB changes, the similiar those two patches are.
+\item For color histogram, simply calculate the coresponsing bins would be enough. Of course, it is possible to change to other distance measurements.
+\end{itemize}
+\par
+In the end, all three scores are weighted sum up to give a total score for each possible matching pair. Detail score defination will be shown in the experiment section.
+\subsubsection*{Robustness}
+%TODO insert some reference images.
+Because we use OBB as one big patch, this sacrifice rubustness for real-time performance. The system could loss tracking when player turn around, so the player is required to submit or capture images of different poses (reference images) before the game. All current frame are matched with those reference images and the previous frame. This gives us two benefits
+\begin{itemize}
+\item If the player turn around, the system can keep tracking with the reference image of a different pose.
+\item Even if we loss tracking, the system can recover tracking if the current frame is similiar enough to the reference frame.
+\end{itemize}
 \section{Experiment}
 	\subsection{Weight on Skeleton}
       \par In order to compare the closeness degree between the skeletons of player and mask provided, our initial idea is to add up euclidean distances of corresponding points if their reliability both higher than threshold value we set. We consider the sum as $loss$. So if $loss$ is bigger than threshold value or the total number of reliable correspondence is less than expected, we will determine the player to lose the match. The naive judgment works well in practice.
       \par To improve the judgment based on our ideas such as the pose of trunk should important than limbs, we intend to assign different weight to keypoints in skeleton. Then the influence of each parts unmatched is different. But in experiment, this method doesn't preform better than the naive implementation. In the end, our implementation is still using the naive version.
-  \subsection{Noise Cancellation Parameter}
+  \subsection{Body Region Tracking}
+\subsubsection{Score function used in real scene}
+The score function are defined as an equal combination of position score, size score and color histogram score.
+\par
+position score: (dist is the body position (pixel) change between current frame and previous frame.)
+\begin{equation}
+    P_{t}=
+   \begin{cases}
+   100 &\mbox{if $dist < 300$}\\
+   0.8*(400-dist) &\mbox{if $300 < dist < 400$}\\
+0.5*(400-dist) &\mbox{if $400 < dist < 500$}\\
+0.3*(400-dist) &\mbox{if $500 < dist < 600$}\\
+0 &\mbox{if $dist > 600$}
+   \end{cases}
+  \end{equation}
+
+size score: (A is the OBB of current frame, B is OBB of previous frame, w is with, h is height)
+\begin{equation}
+    S_{t}=
+   \begin{cases}
+   100 &\mbox{if $\frac{3}{4} < \frac{A.h}{B.h} < \frac{5}{4} $ \&\& $\frac{1}{3} < \frac{A.w}{B.w} < \frac{7}{4} $}\\
+25 &\mbox{Otherwise}
+   \end{cases}
+  \end{equation}
+
+\par
+color score is simply the number of there coresponsing bins.
+
+\subsubsection{Tracking Result}
+%TODO fill in images of tracking result.
 \section{Conclusion}
     \par A realtime single RGB-camera based somatosensory game has been produced in our project. We have implemented it from a simple way to a more technical way. Primary related computer vision topics we have put into practice include filtering, pose detection, key point detection, color histogram, tracking and so on.
     \par Honestly, we have learned so much from this project. Studying previous related works broadened our horizons and expanded our minds. Converting theoretical knowledged learned from class into practical work also consolidated our knowledge and improved our programming skills.
