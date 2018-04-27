@@ -1,5 +1,5 @@
 # GamBody_doc
-This is a rep for all documents of this project goes here.
+This is a repo for all documents of this project goes here.
 
 ## Proposal
 We proposed this project and all the goals are inside.
